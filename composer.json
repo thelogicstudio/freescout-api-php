@@ -34,7 +34,7 @@
     "scripts": {
         "analyse": "vendor/bin/phpstan analyse src tests --level=5",
         "fix": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
-        "sniff": "vendor/bin/php-cs-fixer fix --allow-risky=yes --dry-run --verbose",
+        "sniff": "vendor/bin/php-cs-fixer fix --allow-risky=yes --dry-run --verbose"
     },
     "minimum-stability": "stable",
     "prefer-stable": true
