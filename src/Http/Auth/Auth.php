@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Http\Auth;
+namespace FreeScout\Api\Http\Auth;
 
 interface Auth
 {

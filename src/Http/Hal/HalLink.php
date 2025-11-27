@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Http\Hal;
+namespace FreeScout\Api\Http\Hal;
 
-use HelpScout\Api\Exception\RuntimeException;
+use FreeScout\Api\Exception\RuntimeException;
 use Rize\UriTemplate;
 
 class HalLink

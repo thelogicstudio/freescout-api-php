@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Tags;
+namespace FreeScout\Api\Tags;
 
-use HelpScout\Api\Entity\Extractable;
+use FreeScout\Api\Entity\Extractable;
 
 /**
  * This collection is only used when updating the Tags on a conversation.  It's only required because

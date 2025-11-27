@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations\Threads\Attachments;
+namespace FreeScout\Api\Conversations\Threads\Attachments;
 
-use HelpScout\Api\Exception\RuntimeException;
-use HelpScout\Api\Support\Filesystem;
+use FreeScout\Api\Exception\RuntimeException;
+use FreeScout\Api\Support\Filesystem;
 
 class AttachmentFactory
 {

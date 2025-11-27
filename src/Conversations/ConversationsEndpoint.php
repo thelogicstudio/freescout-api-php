@@ -2,29 +2,39 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations;
+namespace FreeScout\Api\Conversations;
 
-use HelpScout\Api\Endpoint;
-use HelpScout\Api\Entity\Collection;
-use HelpScout\Api\Entity\PagedCollection;
-use HelpScout\Api\Entity\Patch;
-use HelpScout\Api\Exception\ValidationErrorException;
-use HelpScout\Api\Http\Hal\HalPagedResources;
-use HelpScout\Api\Http\Hal\HalResource;
-use HelpScout\Api\Tags\TagsCollection;
+use FreeScout\Api\Endpoint;
+use FreeScout\Api\Entity\Collection;
+use FreeScout\Api\Entity\PagedCollection;
+use FreeScout\Api\Entity\Patch;
+use FreeScout\Api\Exception\ValidationErrorException;
+use FreeScout\Api\Http\Hal\HalPagedResources;
+use FreeScout\Api\Http\Hal\HalResource;
+use FreeScout\Api\Tags\TagsCollection;
 
 class ConversationsEndpoint extends Endpoint
 {
     public function get(int $id, ?ConversationRequest $conversationRequest = null): Conversation
     {
-        $conversationResource = $this->restClient->getResource(Conversation::class, sprintf('/v2/conversations/%d', $id));
+		$conversationRequest = $conversationRequest ?: (new ConversationRequest())->withThreads();
+		$uri = sprintf('/api/conversations/%d', $id);
+		$embed = [];
+		foreach([
+			ConversationLinks::THREADS,
+			ConversationLinks::TAGS,
+			ConversationLinks::TIMELOGS,
+		] as $link) if($conversationRequest->hasLink($link)) $embed[] = $link;
+		if($embed) $uri.= '?embed='.implode(',', $embed);
 
-        return $this->hydrateConversationWithSubEntities($conversationResource, $conversationRequest ?: new ConversationRequest());
+        $conversationResource = $this->restClient->getResource(Conversation::class, $uri);
+
+        return $this->hydrateConversationWithSubEntities($conversationResource, $conversationRequest);
     }
 
     public function delete(int $conversationId): void
     {
-        $this->restClient->deleteResource(sprintf('/v2/conversations/%d', $conversationId));
+        $this->restClient->deleteResource(sprintf('/api/conversations/%d', $conversationId));
     }
 
     /**
@@ -32,7 +42,7 @@ class ConversationsEndpoint extends Endpoint
      */
     public function create(Conversation $conversation): ?int
     {
-        return $this->restClient->createResource($conversation, sprintf('/v2/conversations'));
+        return $this->restClient->createResource($conversation, sprintf('/api/conversations'));
     }
 
     /**
@@ -57,7 +67,7 @@ class ConversationsEndpoint extends Endpoint
 
         $this->restClient->updateResource(
             $customFieldsCollection,
-            sprintf('/v2/conversations/%d/fields', $conversationId)
+            sprintf('/api/conversations/%d/fields', $conversationId)
         );
     }
 
@@ -88,7 +98,7 @@ class ConversationsEndpoint extends Endpoint
 
         $this->restClient->updateResource(
             $tagsCollection,
-            sprintf('/v2/conversations/%d/tags', $conversationId)
+            sprintf('/api/conversations/%d/tags', $conversationId)
         );
     }
 
@@ -99,7 +109,7 @@ class ConversationsEndpoint extends Endpoint
         ?ConversationFilters $conversationFilters = null,
         ?ConversationRequest $conversationRequest = null
     ): PagedCollection {
-        $uri = '/v2/conversations';
+        $uri = '/api/conversations';
         if ($conversationFilters) {
             $params = $conversationFilters->getParams();
             if (!empty($params)) {
@@ -130,7 +140,8 @@ class ConversationsEndpoint extends Endpoint
             $conversationResources->getLinks(),
             function (string $uri) use ($conversationRequest) {
                 return $this->loadConversations($uri, $conversationRequest);
-            }
+            },
+			$uri
         );
     }
 
@@ -204,6 +215,6 @@ class ConversationsEndpoint extends Endpoint
 
     private function patchConversation(int $conversationId, Patch $patch): void
     {
-        $this->restClient->patchResource($patch, sprintf('/v2/conversations/%d', $conversationId));
+        $this->restClient->patchResource($patch, sprintf('/api/conversations/%d', $conversationId));
     }
 }

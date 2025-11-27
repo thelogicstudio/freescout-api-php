@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations;
+namespace FreeScout\Api\Conversations;
 
 class EmailConversation extends Conversation
 {

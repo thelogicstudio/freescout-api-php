@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Entity;
+namespace FreeScout\Api\Entity;
 
-use HelpScout\Api\Http\Hal\HalLink;
-use HelpScout\Api\Http\Hal\HalLinks;
-use HelpScout\Api\Http\Hal\HalPageMetadata;
+use FreeScout\Api\Exception\InvalidArgumentException;
+use FreeScout\Api\Http\Hal\HalLink;
+use FreeScout\Api\Http\Hal\HalLinks;
+use FreeScout\Api\Http\Hal\HalPageMetadata;
 
 class PagedCollection extends Collection
 {
@@ -35,13 +36,16 @@ class PagedCollection extends Collection
      */
     private $loader;
 
-    public function __construct(array $items, HalPageMetadata $pageMetadata, HalLinks $links, callable $loader)
+	private $uri;
+
+    public function __construct(array $items, HalPageMetadata $pageMetadata, HalLinks $links, callable $loader, ?string $uri)
     {
         parent::__construct($items);
 
         $this->pageMetadata = $pageMetadata;
         $this->links = $links;
         $this->loader = $loader;
+		$this->uri = $uri;
     }
 
     public function getPageNumber(): int
@@ -71,27 +75,38 @@ class PagedCollection extends Collection
 
     public function getPage(int $number): self
     {
-        return $this->loadPage($this->links->expand(self::REL_PAGE, [self::PAGE_VARIABLE => $number]));
+		$query = parse_url($this->uri);
+		parse_str($query['query'] ?? '', $queryParams);
+		$queryParams = array_merge($queryParams, [
+			self::PAGE_VARIABLE => $number,
+		]);
+        return $this->loadPage($query['path'].'?'.http_build_query($queryParams));
     }
 
     public function getNextPage(): self
     {
-        return $this->loadPage($this->links->getHref(HalLink::REL_NEXT));
+		if($this->pageMetadata->getPageNumber() < $this->pageMetadata->getTotalPageCount()) {
+			return $this->getPage($this->pageMetadata->getPageNumber() + 1);
+		}
+        throw new InvalidArgumentException('Next page does not exist');
     }
 
     public function getPreviousPage(): self
     {
-        return $this->loadPage($this->links->getHref(HalLink::REL_PREVIOUS));
+		if($this->pageMetadata->getPageNumber() > 1) {
+			return $this->getPage($this->pageMetadata->getPageNumber() - 1);
+		}
+		throw new InvalidArgumentException('Previous page does not exist');
     }
 
     public function getFirstPage(): self
     {
-        return $this->loadPage($this->links->getHref(HalLink::REL_FIRST));
+		return $this->getPage(1);
     }
 
     public function getLastPage(): self
     {
-        return $this->loadPage($this->links->getHref(HalLink::REL_LAST));
+		return $this->getPage($this->pageMetadata->getTotalPageCount());
     }
 
     private function loadPage(string $uri): self

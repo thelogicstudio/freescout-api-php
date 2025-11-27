@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations;
+namespace FreeScout\Api\Conversations;
 
-use HelpScout\Api\Conversations\Threads\ThreadFactory;
-use HelpScout\Api\Customers\Customer;
-use HelpScout\Api\Entity\LinkedEntityLoader;
-use HelpScout\Api\Mailboxes\Mailbox;
-use HelpScout\Api\Users\User;
+use FreeScout\Api\Conversations\Threads\ThreadFactory;
+use FreeScout\Api\Customers\Customer;
+use FreeScout\Api\Entity\LinkedEntityLoader;
+use FreeScout\Api\Mailboxes\Mailbox;
+use FreeScout\Api\Users\User;
 
 class ConversationLoader extends LinkedEntityLoader
 {
@@ -42,14 +42,14 @@ class ConversationLoader extends LinkedEntityLoader
             $conversation->setAssignee($assignee);
         }
 
-        if ($this->shouldLoadResource(ConversationLinks::THREADS)) {
-            $threadFactory = new ThreadFactory();
-            $threads = $this->loadResources(function (array $data) use ($threadFactory) {
-                return $threadFactory->make($data['type'], $data);
-            }, ConversationLinks::THREADS);
+		if ($this->shouldLoadResource(ConversationLinks::THREADS)) {
+			$threadFactory = new ThreadFactory();
+			$threads = $this->loadResources(function (array $data) use ($threadFactory) {
+				return $threadFactory->make($data['type'], $data);
+			}, ConversationLinks::THREADS);
 
-            $conversation->setThreads($threads);
-        }
+			$conversation->setThreads($threads);
+		}
 
         if ($conversation->getStatus() === Status::CLOSED && $this->shouldLoadResource(ConversationLinks::CLOSED_BY)) {
             $closedBy = $this->loadResource(User::class, ConversationLinks::CLOSED_BY);

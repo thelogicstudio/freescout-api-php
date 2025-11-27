@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations\Threads\Attachments;
+namespace FreeScout\Api\Conversations\Threads\Attachments;
 
-use HelpScout\Api\Endpoint;
+use FreeScout\Api\Endpoint;
 
 class AttachmentsEndpoint extends Endpoint
 {
@@ -12,7 +12,7 @@ class AttachmentsEndpoint extends Endpoint
     {
         $attachmentResource = $this->restClient->getResource(
             Attachment::class,
-            sprintf('/v2/conversations/%d/attachments/%d/data', $conversationId, $attachmentId)
+            sprintf('/api/conversations/%d/attachments/%d/data', $conversationId, $attachmentId)
         );
 
         return $attachmentResource->getEntity();
@@ -22,14 +22,14 @@ class AttachmentsEndpoint extends Endpoint
     {
         return $this->restClient->createResource(
             $attachment,
-            sprintf('/v2/conversations/%d/threads/%d/attachments', $conversationId, $threadId)
+            sprintf('/api/conversations/%d/threads/%d/attachments', $conversationId, $threadId)
         );
     }
 
     public function delete(int $conversationId, int $attachmentId): void
     {
         $this->restClient->deleteResource(
-            sprintf('/v2/conversations/%d/attachments/%d', $conversationId, $attachmentId)
+            sprintf('/api/conversations/%d/attachments/%d', $conversationId, $attachmentId)
         );
     }
 }

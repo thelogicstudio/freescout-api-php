@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations;
+namespace FreeScout\Api\Conversations;
 
-use HelpScout\Api\Assert\Assert;
-use HelpScout\Api\Entity\Extractable;
-use HelpScout\Api\Entity\Hydratable;
+use FreeScout\Api\Assert\Assert;
+use FreeScout\Api\Entity\Extractable;
+use FreeScout\Api\Entity\Hydratable;
 
 class CustomField implements Extractable, Hydratable
 {

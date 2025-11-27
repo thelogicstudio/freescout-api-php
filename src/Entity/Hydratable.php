@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Entity;
+namespace FreeScout\Api\Entity;
 
 interface Hydratable
 {

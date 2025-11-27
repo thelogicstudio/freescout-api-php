@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Customers\Entry;
+namespace FreeScout\Api\Customers\Entry;
 
-use HelpScout\Api\Entity\Extractable;
-use HelpScout\Api\Entity\Hydratable;
+use FreeScout\Api\Entity\Extractable;
+use FreeScout\Api\Entity\Hydratable;
 
 class Property implements Extractable, Hydratable
 {

@@ -2,18 +2,19 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations\Threads;
+namespace FreeScout\Api\Conversations\Threads;
 
 use DateTimeInterface;
-use HelpScout\Api\Assert\Assert;
-use HelpScout\Api\Conversations\Threads\Attachments\Attachment;
-use HelpScout\Api\Conversations\Threads\Support\HasPartiesToBeNotified;
-use HelpScout\Api\Entity\Collection;
-use HelpScout\Api\Entity\Extractable;
-use HelpScout\Api\Entity\Hydratable;
-use HelpScout\Api\Exception\RuntimeException;
-use HelpScout\Api\Support\ExtractsData;
-use HelpScout\Api\Support\HydratesData;
+use FreeScout\Api\Assert\Assert;
+use FreeScout\Api\Conversations\Threads\Attachments\Attachment;
+use FreeScout\Api\Conversations\Threads\Support\HasPartiesToBeNotified;
+use FreeScout\Api\Entity\Collection;
+use FreeScout\Api\Entity\Extractable;
+use FreeScout\Api\Entity\Hydratable;
+use FreeScout\Api\Exception\RuntimeException;
+use FreeScout\Api\Http\Hal\HalDeserializer;
+use FreeScout\Api\Support\ExtractsData;
+use FreeScout\Api\Support\HydratesData;
 
 class Thread implements Extractable, Hydratable
 {
@@ -90,6 +91,7 @@ class Thread implements Extractable, Hydratable
     public function __construct()
     {
         $this->attachments = new Collection();
+		$this->type = $this->getType();
     }
 
     public static function resourceUrl(int $conversationId): string
@@ -99,6 +101,7 @@ class Thread implements Extractable, Hydratable
 
     public function hydrate(array $data, array $embedded = [])
     {
+		if(empty($embedded) && !empty($data[HalDeserializer::EMBEDDED])) $embedded = $data[HalDeserializer::EMBEDDED];
         if (isset($data['id'])) {
             $this->setId((int) $data['id']);
         }

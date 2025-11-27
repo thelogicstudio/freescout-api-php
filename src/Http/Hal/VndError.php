@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Http\Hal;
+namespace FreeScout\Api\Http\Hal;
 
 class VndError
 {
@@ -39,9 +39,6 @@ class VndError
     }
 
     /**
-     * If populated, include this in any support requests you submit to HelpScout which will help us identify
-     * any issues you encounter.
-     *
      * @return string|null
      */
     public function getLogRef()

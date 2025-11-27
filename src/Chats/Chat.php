@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Chats;
+namespace FreeScout\Api\Chats;
 
-use HelpScout\Api\Customers\Customer;
-use HelpScout\Api\Entity\Collection;
-use HelpScout\Api\Entity\Hydratable;
-use HelpScout\Api\Support\HasCustomer;
-use HelpScout\Api\Support\HydratesData;
-use HelpScout\Api\Tags\Tag;
-use HelpScout\Api\Users\User;
+use FreeScout\Api\Customers\Customer;
+use FreeScout\Api\Entity\Collection;
+use FreeScout\Api\Entity\Hydratable;
+use FreeScout\Api\Support\HasCustomer;
+use FreeScout\Api\Support\HydratesData;
+use FreeScout\Api\Tags\Tag;
+use FreeScout\Api\Users\User;
 
 class Chat implements Hydratable
 {

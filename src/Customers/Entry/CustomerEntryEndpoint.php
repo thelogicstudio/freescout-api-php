@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Customers\Entry;
+namespace FreeScout\Api\Customers\Entry;
 
-use HelpScout\Api\Endpoint;
-use HelpScout\Api\Entity\Collection;
+use FreeScout\Api\Endpoint;
+use FreeScout\Api\Entity\Collection;
 
 class CustomerEntryEndpoint extends Endpoint
 {
-    public const CUSTOMER_ADDRESS = '/v2/customers/%d/address';
-    public const CREATE_CUSTOMER_CHAT = '/v2/customers/%d/chats';
-    public const CUSTOMER_CHAT = '/v2/customers/%d/chats/%d';
-    public const CREATE_CUSTOMER_EMAIL = '/v2/customers/%d/emails';
-    public const CUSTOMER_EMAIL = '/v2/customers/%d/emails/%d';
-    public const CREATE_CUSTOMER_PHONE = '/v2/customers/%d/phones';
-    public const CUSTOMER_PHONE = '/v2/customers/%d/phones/%d';
-    public const CREATE_CUSTOMER_SOCIAL = '/v2/customers/%d/social-profiles';
-    public const CUSTOMER_SOCIAL = '/v2/customers/%d/social-profiles/%d';
-    public const CREATE_CUSTOMER_WEBSITE = '/v2/customers/%d/websites';
-    public const CUSTOMER_WEBSITE = '/v2/customers/%d/websites/%d';
-    public const CUSTOMER_PROPERTIES = '/v2/customers/%d/properties';
+    public const CUSTOMER_ADDRESS = '/customers/%d/address';
+    public const CREATE_CUSTOMER_CHAT = '/customers/%d/chats';
+    public const CUSTOMER_CHAT = '/customers/%d/chats/%d';
+    public const CREATE_CUSTOMER_EMAIL = '/customers/%d/emails';
+    public const CUSTOMER_EMAIL = '/customers/%d/emails/%d';
+    public const CREATE_CUSTOMER_PHONE = '/customers/%d/phones';
+    public const CUSTOMER_PHONE = '/customers/%d/phones/%d';
+    public const CREATE_CUSTOMER_SOCIAL = '/customers/%d/social-profiles';
+    public const CUSTOMER_SOCIAL = '/customers/%d/social-profiles/%d';
+    public const CREATE_CUSTOMER_WEBSITE = '/customers/%d/websites';
+    public const CUSTOMER_WEBSITE = '/customers/%d/websites/%d';
+    public const CUSTOMER_PROPERTIES = '/customers/%d/properties';
 
     public function createAddress(int $customerId, Address $address): ?int
     {

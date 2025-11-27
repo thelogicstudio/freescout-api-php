@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Workflows;
+namespace FreeScout\Api\Workflows;
 
-use HelpScout\Api\Entity\Extractable;
+use FreeScout\Api\Entity\Extractable;
 
 class WorkflowBatch implements Extractable
 {

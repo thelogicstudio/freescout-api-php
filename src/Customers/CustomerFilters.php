@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Customers;
+namespace FreeScout\Api\Customers;
 
 use DateTime;
 use DateTimeZone;
-use HelpScout\Api\Assert\Assert;
-use HelpScout\Api\Reports\Report;
+use FreeScout\Api\Assert\Assert;
 
 class CustomerFilters
 {
@@ -52,7 +51,7 @@ class CustomerFilters
             'mailbox' => $this->mailbox,
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
-            'modifiedSince' => $this->modifiedSince !== null ? $this->modifiedSince->format(Report::DATE_FORMAT) : null,
+            'modifiedSince' => $this->modifiedSince !== null ? $this->modifiedSince->format('Y-m-d\TH:i:s\Z') : null,
             'sortField' => $this->sortField,
             'sortOrder' => $this->sortOrder,
             'query' => $this->query,
@@ -122,7 +121,6 @@ class CustomerFilters
     }
 
     /**
-     * @see https://developer.helpscout.com/mailbox-api/endpoints/customers/list/#query
      */
     public function withQuery(string $query): CustomerFilters
     {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Entity;
+namespace FreeScout\Api\Entity;
 
 use Closure;
-use HelpScout\Api\Http\Hal\HalResource;
-use HelpScout\Api\Http\RestClient;
+use FreeScout\Api\Http\Hal\HalResource;
+use FreeScout\Api\Http\RestClient;
 
 abstract class LinkedEntityLoader
 {
@@ -47,7 +47,6 @@ abstract class LinkedEntityLoader
     protected function loadResource($entityClass, string $rel)
     {
         $uri = $this->resource->getLinks()->getHref($rel);
-
         return $this->restClient->getResource($entityClass, $uri)->getEntity();
     }
 

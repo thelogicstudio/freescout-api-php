@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Customers;
+namespace FreeScout\Api\Customers;
 
 class CustomerLinks
 {

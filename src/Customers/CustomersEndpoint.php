@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Customers;
+namespace FreeScout\Api\Customers;
 
-use HelpScout\Api\Endpoint;
-use HelpScout\Api\Entity\PagedCollection;
-use HelpScout\Api\Exception\ValidationErrorException;
-use HelpScout\Api\Http\Hal\HalPagedResources;
-use HelpScout\Api\Http\Hal\HalResource;
+use FreeScout\Api\Endpoint;
+use FreeScout\Api\Entity\PagedCollection;
+use FreeScout\Api\Exception\ValidationErrorException;
+use FreeScout\Api\Http\Hal\HalPagedResources;
+use FreeScout\Api\Http\Hal\HalResource;
 
 class CustomersEndpoint extends Endpoint
 {
@@ -19,7 +19,7 @@ class CustomersEndpoint extends Endpoint
     {
         return $this->restClient->createResource(
             $customer,
-            '/v2/customers'
+            '/customers'
         );
     }
 
@@ -30,7 +30,7 @@ class CustomersEndpoint extends Endpoint
     {
         $this->restClient->updateResource(
             $customer,
-            sprintf('/v2/customers/%d', $customer->getId())
+            sprintf('/api/customers/%d', $customer->getId())
         );
     }
 
@@ -38,7 +38,7 @@ class CustomersEndpoint extends Endpoint
     {
         $customerResource = $this->restClient->getResource(
             Customer::class,
-            sprintf('/v2/customers/%d', $id)
+            sprintf('/api/customers/%d', $id)
         );
 
         return $this->hydrateCustomerWithSubEntities(
@@ -54,7 +54,7 @@ class CustomersEndpoint extends Endpoint
         ?CustomerFilters $customerFilters = null,
         ?CustomerRequest $customerRequest = null
     ): PagedCollection {
-        $uri = '/v2/customers';
+        $uri = '/api/customers';
         if ($customerFilters) {
             $params = $customerFilters->getParams();
             if (!empty($params)) {
@@ -71,7 +71,7 @@ class CustomersEndpoint extends Endpoint
     public function delete(int $customerId): void
     {
         $this->restClient->deleteResource(
-            sprintf('/v2/customers/%d', $customerId)
+            sprintf('/api/customers/%d', $customerId)
         );
     }
 
@@ -100,7 +100,8 @@ class CustomersEndpoint extends Endpoint
             $customerResources->getLinks(),
             function (string $uri) use ($customerRequest) {
                 return $this->loadCustomers($uri, $customerRequest);
-            }
+            },
+			$uri
         );
     }
 

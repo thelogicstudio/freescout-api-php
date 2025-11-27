@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Mailboxes;
+namespace FreeScout\Api\Mailboxes;
 
-use HelpScout\Api\Assert\Assert;
+use FreeScout\Api\Assert\Assert;
 
 class MailboxRequest
 {

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Chats;
+namespace FreeScout\Api\Chats;
 
-use HelpScout\Api\Endpoint;
+use FreeScout\Api\Endpoint;
 
 class ChatsEndpoint extends Endpoint
 {
-    public const CHAT_URI = '/chat/v1/%s';
-    public const EVENTS_URI = '/chat/v1/%s/events';
+    public const CHAT_URI = '/api/chat/v1/%s';
+    public const EVENTS_URI = '/api/chat/v1/%s/events';
     public const EVENTS_RESOURCE_KEY = 'events';
 
     public function get(string $id): Chat

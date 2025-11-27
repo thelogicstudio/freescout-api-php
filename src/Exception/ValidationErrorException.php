@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Exception;
+namespace FreeScout\Api\Exception;
 
 use GuzzleHttp\Exception\RequestException;
-use HelpScout\Api\Http\Hal\VndError;
+use FreeScout\Api\Http\Hal\VndError;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 

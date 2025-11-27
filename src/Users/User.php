@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Users;
+namespace FreeScout\Api\Users;
 
 use DateTime;
-use HelpScout\Api\Assert\Assert;
-use HelpScout\Api\Entity\Hydratable;
-use HelpScout\Api\Support\HydratesData;
+use FreeScout\Api\Assert\Assert;
+use FreeScout\Api\Entity\Hydratable;
+use FreeScout\Api\Support\HydratesData;
 
 class User implements Hydratable
 {

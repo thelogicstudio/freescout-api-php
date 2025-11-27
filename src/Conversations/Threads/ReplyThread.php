@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations\Threads;
+namespace FreeScout\Api\Conversations\Threads;
 
-use HelpScout\Api\Conversations\Threads\Support\HasPartiesToBeNotified;
-use HelpScout\Api\Conversations\Threads\Support\HasUser;
-use HelpScout\Api\Support\HasCustomer;
+use FreeScout\Api\Conversations\Threads\Support\HasPartiesToBeNotified;
+use FreeScout\Api\Conversations\Threads\Support\HasUser;
+use FreeScout\Api\Support\HasCustomer;
 
 class ReplyThread extends Thread
 {
@@ -14,11 +14,11 @@ class ReplyThread extends Thread
         HasPartiesToBeNotified,
         HasUser;
 
-    public const TYPE = 'reply';
+    public const TYPE = 'message';
 
     public static function resourceUrl(int $conversationId): string
     {
-        return sprintf('/v2/conversations/%d/reply', $conversationId);
+        return sprintf('/api/conversations/%d/threads', $conversationId);
     }
 
     public function getType(): ?string

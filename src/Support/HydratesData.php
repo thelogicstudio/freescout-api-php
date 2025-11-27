@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Support;
+namespace FreeScout\Api\Support;
 
 use DateTime;
-use HelpScout\Api\Entity\Collection;
-use HelpScout\Api\Entity\Hydratable;
+use FreeScout\Api\Entity\Collection;
+use FreeScout\Api\Entity\Hydratable;
 
 trait HydratesData
 {

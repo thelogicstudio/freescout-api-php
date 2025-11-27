@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Chats;
+namespace FreeScout\Api\Chats;
 
-use HelpScout\Api\Entity\Hydratable;
-use HelpScout\Api\Support\HydratesData;
+use FreeScout\Api\Entity\Hydratable;
+use FreeScout\Api\Support\HydratesData;
 
 class TimelineEvent implements Hydratable
 {

@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Mailboxes;
+namespace FreeScout\Api\Mailboxes;
 
-use HelpScout\Api\Endpoint;
-use HelpScout\Api\Entity\PagedCollection;
-use HelpScout\Api\Http\Hal\HalPagedResources;
-use HelpScout\Api\Http\Hal\HalResource;
+use FreeScout\Api\Endpoint;
+use FreeScout\Api\Entity\PagedCollection;
+use FreeScout\Api\Http\Hal\HalPagedResources;
+use FreeScout\Api\Http\Hal\HalResource;
 
 class MailboxesEndpoint extends Endpoint
 {
-    public const GET_MAILBOX_URI = '/v2/mailboxes/%d';
-    public const LIST_MAILBOXES_URI = '/v2/mailboxes';
+    public const GET_MAILBOX_URI = '/api/mailboxes/%d';
+    public const LIST_MAILBOXES_URI = '/api/mailboxes';
     public const RESOURCE_KEY = 'mailboxes';
 
     public function get(int $id, ?MailboxRequest $mailboxRequest = null): Mailbox
@@ -55,7 +55,8 @@ class MailboxesEndpoint extends Endpoint
             $mailboxResources->getLinks(),
             function (string $uri) use ($mailboxRequest) {
                 return $this->loadMailboxes($uri, $mailboxRequest);
-            }
+            },
+			$uri
         );
     }
 

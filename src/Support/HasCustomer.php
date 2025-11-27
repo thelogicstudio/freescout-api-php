@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Support;
+namespace FreeScout\Api\Support;
 
-use HelpScout\Api\Customers\Customer;
-use HelpScout\Api\Customers\Entry\Email;
+use FreeScout\Api\Customers\Customer;
+use FreeScout\Api\Customers\Entry\Email;
 
 trait HasCustomer
 {

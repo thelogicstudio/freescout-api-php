@@ -2,31 +2,31 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Webhooks;
+namespace FreeScout\Api\Webhooks;
 
 use GuzzleHttp\Psr7\Request;
-use HelpScout\Api\Conversations\Conversation;
-use HelpScout\Api\Customers\Customer;
-use HelpScout\Api\Exception\InvalidSignatureException;
-use HelpScout\Api\Exception\JsonException;
-use HelpScout\Api\Http\Hal\HalDeserializer;
+use FreeScout\Api\Conversations\Conversation;
+use FreeScout\Api\Customers\Customer;
+use FreeScout\Api\Exception\InvalidSignatureException;
+use FreeScout\Api\Exception\JsonException;
+use FreeScout\Api\Http\Hal\HalDeserializer;
 use Psr\Http\Message\RequestInterface;
 
 class IncomingWebhook
 {
     public const SIGNATURE_HEADERS = [
-        'HTTP_X_HELPSCOUT_SIGNATURE',
-        'X_HELPSCOUT_SIGNATURE',
-        'x-helpscout-signature',
+        'HTTP_X_FREESCOUT_SIGNATURE',
+        'X_FREESCOUT_SIGNATURE',
+        'x-freescout-signature',
     ];
 
     public const EVENT_HEADERS = [
-        'HTTP_X_HELPSCOUT_EVENT',
-        'X_HELPSCOUT_EVENT',
-        'x-helpscout-event',
+        'HTTP_X_FREESCOUT_EVENT',
+        'X_FREESCOUT_EVENT',
+        'x-freescout-event',
     ];
 
-    public const TEST_EVENT = 'helpscout.test';
+    public const TEST_EVENT = 'freescout.test';
     public const CONVO_EVENT = 'convo';
     public const CUSTOMER_EVENT = 'customer';
 

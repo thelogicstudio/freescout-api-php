@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Entity;
+namespace FreeScout\Api\Entity;
 
 use ArrayObject;
-use HelpScout\Api\Exception\RuntimeException;
+use FreeScout\Api\Exception\RuntimeException;
 
 class Collection extends ArrayObject implements Extractable
 {

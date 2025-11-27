@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Mailboxes;
+namespace FreeScout\Api\Mailboxes;
 
-use HelpScout\Api\Entity\LinkedEntityLoader;
-use HelpScout\Api\Mailboxes\Entry\Field;
-use HelpScout\Api\Mailboxes\Entry\Folder;
+use FreeScout\Api\Entity\LinkedEntityLoader;
+use FreeScout\Api\Mailboxes\Entry\Field;
+use FreeScout\Api\Mailboxes\Entry\Folder;
 
 class MailboxLoader extends LinkedEntityLoader
 {

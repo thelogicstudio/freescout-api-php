@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Http\Hal;
+namespace FreeScout\Api\Http\Hal;
 
-use HelpScout\Api\Exception\InvalidArgumentException;
+use FreeScout\Api\Exception\InvalidArgumentException;
 
 class HalDocument
 {
@@ -80,6 +80,7 @@ class HalDocument
                     if ($embeddedItemData->hasLinks()) {
                         $data[HalDeserializer::LINKS] = $embeddedItemData->getLinks();
                     }
+					if(sizeof($embeddedItemData->getEmbeddedEntities())) $data[HalDeserializer::EMBEDDED] = $embeddedItemData->getEmbeddedEntities();
                     $embeddedData[$embeddedType][] = $data;
                 }
             } else {
@@ -88,6 +89,7 @@ class HalDocument
                 if ($embeddedItems->hasLinks()) {
                     $data[HalDeserializer::LINKS] = $embeddedItems->getLinks();
                 }
+				if(sizeof($embeddedItems->getEmbeddedEntities())) $data[HalDeserializer::EMBEDDED] = $embeddedItems->getEmbeddedEntities();
                 $embeddedData[$embeddedType] = $data;
             }
         }

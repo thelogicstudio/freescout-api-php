@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Assert;
+namespace FreeScout\Api\Assert;
 
-use HelpScout\Api\Exception\InvalidArgumentException;
+use FreeScout\Api\Exception\InvalidArgumentException;
 use Webmozart\Assert\Assert as BaseAssert;
 
 class Assert extends BaseAssert

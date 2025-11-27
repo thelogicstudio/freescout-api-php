@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Users;
+namespace FreeScout\Api\Users;
 
-use HelpScout\Api\Endpoint;
-use HelpScout\Api\Entity\PagedCollection;
+use FreeScout\Api\Endpoint;
+use FreeScout\Api\Entity\PagedCollection;
 
 class UsersEndpoint extends Endpoint
 {
-    public const GET_USER_URI = '/v2/users/%d';
-    public const AUTH_USER_URI = '/v2/users/me';
-    public const LIST_USERS_URI = '/v2/users';
+    public const GET_USER_URI = '/api/users/%d';
+    public const AUTH_USER_URI = '/api/users/me';
+    public const LIST_USERS_URI = '/api/users';
     public const RESOURCE_KEY = 'users';
 
     public function get(int $id): User

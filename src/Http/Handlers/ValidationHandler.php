@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Http\Handlers;
+namespace FreeScout\Api\Http\Handlers;
 
-use HelpScout\Api\Exception\ValidationErrorException;
-use HelpScout\Api\Http\Hal\HalDeserializer;
+use FreeScout\Api\Exception\ValidationErrorException;
+use FreeScout\Api\Http\Hal\HalDeserializer;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 

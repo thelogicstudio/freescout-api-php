@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations\Threads\Support;
+namespace FreeScout\Api\Conversations\Threads\Support;
 
-use HelpScout\Api\Users\User;
+use FreeScout\Api\Users\User;
 
 trait HasUser
 {

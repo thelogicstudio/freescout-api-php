@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations;
+namespace FreeScout\Api\Conversations;
 
 class ConversationLinks
 {
@@ -14,4 +14,6 @@ class ConversationLinks
     public const THREADS = 'threads';
     public const ASSIGNEE = 'assignee';
     public const WEB = 'web';
+    public const TIMELOGS = 'timelogs';
+    public const TAGS = 'tags';
 }

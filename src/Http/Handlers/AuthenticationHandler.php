@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Http\Handlers;
+namespace FreeScout\Api\Http\Handlers;
 
-use HelpScout\Api\Exception\AuthenticationException;
+use FreeScout\Api\Exception\AuthenticationException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 

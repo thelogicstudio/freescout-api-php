@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Customers;
+namespace FreeScout\Api\Customers;
 
-use HelpScout\Api\Assert\Assert;
+use FreeScout\Api\Assert\Assert;
 
 /**
  * This class is deprecated now that all entities are always provided.
  *
  * @deprecated
- * @see https://developer.helpscout.com/mailbox-api/changelog/#2019-01-25-new-return-all-customer-entries-always
  */
 class CustomerRequest
 {

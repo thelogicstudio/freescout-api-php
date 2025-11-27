@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Workflows;
+namespace FreeScout\Api\Workflows;
 
 class RunWorkflowRequest
 {

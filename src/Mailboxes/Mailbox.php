@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Mailboxes;
+namespace FreeScout\Api\Mailboxes;
 
 use DateTime;
-use HelpScout\Api\Entity\Collection;
-use HelpScout\Api\Entity\Hydratable;
-use HelpScout\Api\Mailboxes\Entry\Field;
-use HelpScout\Api\Mailboxes\Entry\Folder;
-use HelpScout\Api\Support\HydratesData;
+use FreeScout\Api\Entity\Collection;
+use FreeScout\Api\Entity\Hydratable;
+use FreeScout\Api\Mailboxes\Entry\Field;
+use FreeScout\Api\Mailboxes\Entry\Folder;
+use FreeScout\Api\Support\HydratesData;
 
 class Mailbox implements Hydratable
 {

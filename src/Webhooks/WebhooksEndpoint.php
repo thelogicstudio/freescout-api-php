@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Webhooks;
+namespace FreeScout\Api\Webhooks;
 
-use HelpScout\Api\Endpoint;
-use HelpScout\Api\Entity\PagedCollection;
+use FreeScout\Api\Endpoint;
+use FreeScout\Api\Entity\PagedCollection;
 
 class WebhooksEndpoint extends Endpoint
 {
-    public const GET_WEBHOOK_URI = '/v2/webhooks/%d';
-    public const LIST_WEBHOOKS_URI = '/v2/webhooks';
-    public const CREATE_WEBHOOK_URI = '/v2/webhooks';
-    public const UPDATE_WEBHOOK_URI = '/v2/webhooks/%d';
-    public const DELETE_WEBHOOK_URI = '/v2/webhooks/%d';
+    public const GET_WEBHOOK_URI = '/api/webhooks/%d';
+    public const LIST_WEBHOOKS_URI = '/api/webhooks';
+    public const CREATE_WEBHOOK_URI = '/api/webhooks';
+    public const UPDATE_WEBHOOK_URI = '/api/webhooks/%d';
+    public const DELETE_WEBHOOK_URI = '/api/webhooks/%d';
     public const RESOURCE_KEY = 'webhooks';
 
     public function create(Webhook $webhook): int

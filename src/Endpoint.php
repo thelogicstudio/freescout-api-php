@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api;
+namespace FreeScout\Api;
 
-use HelpScout\Api\Entity\PagedCollection;
-use HelpScout\Api\Http\Hal\HalPagedResources;
-use HelpScout\Api\Http\Hal\HalResource;
-use HelpScout\Api\Http\RestClient;
+use FreeScout\Api\Entity\PagedCollection;
+use FreeScout\Api\Http\Hal\HalPagedResources;
+use FreeScout\Api\Http\Hal\HalResource;
+use FreeScout\Api\Http\RestClient;
 
 abstract class Endpoint
 {
@@ -60,7 +60,8 @@ abstract class Endpoint
             $pagedResources->map($mapClosure),
             $pagedResources->getPageMetadata(),
             $pagedResources->getLinks(),
-            $nextPage
+            $nextPage,
+			$uri
         );
     }
 }

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations\Threads;
+namespace FreeScout\Api\Conversations\Threads;
 
 use DateTimeInterface;
-use HelpScout\Api\Customers\Customer;
-use HelpScout\Api\Users\User;
+use FreeScout\Api\Customers\Customer;
+use FreeScout\Api\Users\User;
 
 /**
  * The API includes some thread details in both the `Conversation` and `Thread` responses.  To avoid duplicating code

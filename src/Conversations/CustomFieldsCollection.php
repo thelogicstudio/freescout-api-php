@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations;
+namespace FreeScout\Api\Conversations;
 
-use HelpScout\Api\Entity\Extractable;
+use FreeScout\Api\Entity\Extractable;
 
 /**
  * This collection is only used when updating the CustomFields on a conversation.  It's only required because

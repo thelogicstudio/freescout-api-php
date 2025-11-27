@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Http\Hal;
+namespace FreeScout\Api\Http\Hal;
 
-use HelpScout\Api\Entity\Hydratable;
-use HelpScout\Api\Exception\JsonException;
+use FreeScout\Api\Entity\Hydratable;
+use FreeScout\Api\Exception\JsonException;
 
 class HalDeserializer
 {
@@ -61,7 +61,6 @@ class HalDeserializer
                 $data['page']['totalPages']
             ));
         }
-
         return new HalResources($resources, $halDocument->getLinks());
     }
 

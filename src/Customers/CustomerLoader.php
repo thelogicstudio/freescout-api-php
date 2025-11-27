@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Customers;
+namespace FreeScout\Api\Customers;
 
-use HelpScout\Api\Customers\Entry\Address;
-use HelpScout\Api\Customers\Entry\ChatHandle;
-use HelpScout\Api\Customers\Entry\Email;
-use HelpScout\Api\Customers\Entry\Phone;
-use HelpScout\Api\Customers\Entry\SocialProfile;
-use HelpScout\Api\Customers\Entry\Website;
-use HelpScout\Api\Entity\LinkedEntityLoader;
+use FreeScout\Api\Customers\Entry\Address;
+use FreeScout\Api\Customers\Entry\ChatHandle;
+use FreeScout\Api\Customers\Entry\Email;
+use FreeScout\Api\Customers\Entry\Phone;
+use FreeScout\Api\Customers\Entry\SocialProfile;
+use FreeScout\Api\Customers\Entry\Website;
+use FreeScout\Api\Entity\LinkedEntityLoader;
 
 /**
  * This loader is responsible for making additional http requests to fetch additional

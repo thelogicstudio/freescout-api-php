@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Tags;
+namespace FreeScout\Api\Tags;
 
-use HelpScout\Api\Endpoint;
-use HelpScout\Api\Entity\PagedCollection;
+use FreeScout\Api\Endpoint;
+use FreeScout\Api\Entity\PagedCollection;
 
 class TagsEndpoint extends Endpoint
 {
-    public const LIST_TAGS_URI = '/v2/tags';
+    public const LIST_TAGS_URI = '/api/tags';
     public const RESOURCE_KEY = 'tags';
 
     public function list(): PagedCollection

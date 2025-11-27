@@ -1,15 +1,12 @@
-# Help Scout API PHP Client
+# Free Scout API PHP Client
 
-[![Build Status](https://travis-ci.org/helpscout/helpscout-api-php.svg?branch=master)](https://travis-ci.com/helpscout/helpscout-api-php)
-[![Maintainability](https://api.codeclimate.com/v1/badges/73d6bfd2fddd8483f8c8/maintainability)](https://codeclimate.com/repos/5c19426f34451a02c4000cab/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/73d6bfd2fddd8483f8c8/test_coverage)](https://codeclimate.com/repos/5c19426f34451a02c4000cab/test_coverage)
+This is a totally unoffical FreeScout PHP client. This client contains methods for easily interacting with the [FreeScout API](https://freescout.net/module/api-webhooks/).
 
-This is the official Help Scout PHP client. This client contains methods for easily interacting with the [Help Scout Mailbox API](http://developer.helpscout.net/help-desk-api-v2/).
+It's based on the Help Scout PHP SDK, which just happens to work nearly identically.
 
 | SDK Version | PHP Version | Branch   | Documentation                                                         |
 |-------------|-------------|----------|-----------------------------------------------------------------------|
-| `3.*`       | >= 7.3      | `master` | This page                                                             |
-| `2.*`       | >= 7.1      | `v2`     | [`v2` branch](https://github.com/helpscout/helpscout-api-php/tree/v2) |
+| `1.*`       | >= 7.3      | `master` | This page                                                             |
 
 ## Table of Contents
 
@@ -47,10 +44,8 @@ This is the official Help Scout PHP client. This client contains methods for eas
 The recommended way to install the client is by using [Composer](https://getcomposer.org/doc/00-intro.md).
 
 ```bash
-composer require helpscout/api "^3.0"
+composer require thelogicstudio/freescout-api "^1.0"
 ```
-
-For Laravel projects, check out [`helpscout/api-laravel`](https://github.com/helpscout/helpscout-api-php-laravel)
 
 ## Usage
 
@@ -65,92 +60,13 @@ require_once 'vendor/autoload.php';
 Use the factory to create a client. Once created, you can set the various credentials to make requests.
 
 ```php
-use HelpScout\Api\ApiClientFactory;
+use FreeScout\Api\ApiClientFactory;
 
-$client = ApiClientFactory::createClient();
-
-// Set Client credentials if using that grant type.  Using this approach will lazily fetch an access token on-demand
-// when needed.
-$client->useClientCredentials($appId, $appSecret);
-
-// Set Access token directly if you have it
-$client->setAccessToken('abc123');
-
-// Use a refresh token to get a new access token
-$client->useRefreshToken($appId, $appSecret, $refreshToken);
+$client = ApiClientFactory::createClient([
+    'baseUri' => 'https://freescout.example.org', 
+    'apiKey' => 'abc123',
+]);
 ```
-
-**Note**
-
-All credential types will trigger a pre-flight request to get an access token (HTTP 'POST' request). To avoid this, set the access token on the client before making a request using the `setAccessToken` method on the client.
-```php
-$client = ApiClientFactory::createClient();
-$client->setAccessToken('asdfasdf');
-```
-The access token will always be used if available, regardless of whether you have other credentials set or not.
-
-### Automatically Refreshing Expired Tokens
-
-When a request fails due to an authentication error, the SDK can automatically try to obtain a new refresh token and then retry the given request automatically.  To enable this, you can provide a callback when creating the ApiClient which can be used to persist the token for other processes to use depending on your needs:
-
-```php
-$client = ApiClientFactory::createClient([], function (Authenticator $authenticator) {
-    // This $authenticator contains the refreshed token
-    echo 'New token: '.$authenticator->accessToken().PHP_EOL;
-});
-```
-
-The callback can also be any class instance that implements `HelpScout\Api\Http\Auth\HandlesTokenRefreshes`:
-
-```php
-use HelpScout\Api\Http\Auth\HandlesTokenRefreshes;
-use HelpScout\Api\Http\Authenticator;
-
-$callback = new class implements HandlesTokenRefreshes {
-    public function whenTokenRefreshed(Authenticator $authenticator)
-    {
-        // @todo Persist the token
-    }
-};
-$client = ApiClientFactory::createClient([], $callback);
-```
-
-### Authorization Code Flow
-
-Because the [authorization code](https://developer.helpscout.com/mailbox-api/overview/authentication/#authorization-code-flow) is only good for a single use, you'll need to exchange the code for an access token and refresh token prior to making additional api calls.  You'll also need to persist the tokens for reuse later.
-
-```php
-$client = ApiClientFactory::createClient();
-$client = $client->swapAuthorizationCodeForReusableTokens(
-    $appId,
-    $appSecret,
-    $authorizationCode
-);
-
-$credentials = $client->getAuthenticator()->getTokens();
-
-echo $credentials['access_token'].PHP_EOL;
-echo $credentials['refresh_token'].PHP_EOL;
-echo $credentials['expires_in'].PHP_EOL;
-```
-
-In addition to providing the access/refresh tokens this will set the current auth to use those tokens, so you can freely make subsequent requests without reinitializing the client.
-
-```
-// uses the one-time authorization code for auth
-$client = $client->swapAuthorizationCodeForReusableTokens(
-    $appId,
-    $appSecret,
-    $authorizationCode
-);
-
-// uses access/refresh tokens for auth
-$client->users()->list();
-```
-
-## Examples
-
-This README contains a lot of examples, but there are more examples for you to experiment with in [`./examples`](https://github.com/helpscout/helpscout-api-php/tree/master/examples).
 
 ## Customers
 
@@ -168,11 +84,11 @@ $customers = $client->customers()->list();
 
 Get customers with a filter.
 
-As described in the API docs the [customer list can be filtered](http://developer.helpscout.net/help-desk-api-v2/customers/list) by a variety of fields. The `CustomerFields` class
+As described in the API docs the [customer list can be filtered](https://api-docs.freescout.net/#list-customers) by a variety of fields. The `CustomerFields` class
 provides a simple interface to set filter values. For example:
 
 ```php
-use HelpScout\Api\Customers\CustomerFilters;
+use FreeScout\Api\Customers\CustomerFilters;
 
 $filter = (new CustomerFilters())
     ->byFirstName('Tom')
@@ -184,7 +100,7 @@ $customers = $client->customers()->list($filter);
 Create a customer.
 
 ```php
-use HelpScout\Api\Customers\Customer;
+use FreeScout\Api\Customers\Customer;
 
 $customer = new Customer();
 $customer->setFirstName('Bob');
@@ -192,7 +108,7 @@ $customer->setFirstName('Bob');
 
 try {
     $customerId = $client->customers()->create($customer);
-} catch (\HelpScout\Api\Exception\ValidationErrorException $e) {
+} catch (\FreeScout\Api\Exception\ValidationErrorException $e) {
     var_dump($e->getError()->getErrors());
 }
 ```
@@ -211,10 +127,10 @@ $client->customers()->update($customer);
 Create a customer email.
 
 ```php
-use HelpScout\Api\Customers\Entry\Email;
+use FreeScout\Api\Customers\Entry\Email;
 
 $email = new Email();
-$email->setValue('lucy@helpscout.com');
+$email->setValue('lucy@example.com');
 $email->setType('work');
 // ...
 
@@ -241,7 +157,7 @@ $client->customerEntry()->deleteEmail($customerId, $emailId);
 Create a customer address.
 
 ```php
-use HelpScout\Api\Customers\Entry\Address;
+use FreeScout\Api\Customers\Entry\Address;
 
 $address = new Address();
 $address->setCity('Boston');
@@ -270,7 +186,7 @@ $client->customerEntry()->deleteAddress($customerId);
 Create a customer phone.
 
 ```php
-use HelpScout\Api\Customers\Entry\Phone;
+use FreeScout\Api\Customers\Entry\Phone;
 
 $phone = new Phone();
 $phone->setValue('123456789');
@@ -300,7 +216,7 @@ $client->customerEntry()->deletePhone($customerId, $phoneId);
 Create a customer chat.
 
 ```php
-use HelpScout\Api\Customers\Entry\ChatHandle;
+use FreeScout\Api\Customers\Entry\ChatHandle;
 
 $chat = new ChatHandle();
 $chat->setValue('1239134812348');
@@ -330,10 +246,10 @@ $client->customerEntry()->deleteChat($customerId, $chatId);
 Create a customer social profile.
 
 ```php
-use HelpScout\Api\Customers\Entry\SocialProfile;
+use FreeScout\Api\Customers\Entry\SocialProfile;
 
 $socialProfile = new SocialProfile();
-$socialProfile->setValue('helpscout');
+$socialProfile->setValue('example');
 $socialProfile->setType('twitter');
 // ...
 
@@ -360,10 +276,10 @@ $client->customerEntry()->deleteSocialProfile($customerId, $socialProfileId);
 Create a customer website.
 
 ```php
-use HelpScout\Api\Customers\Entry\Website;
+use FreeScout\Api\Customers\Entry\Website;
 
 $website = new Website();
-$website->setValue('https://www.helpscout.com');
+$website->setValue('https://www.example.com');
 // ...
 
 $client->customerEntry()->createWebsite($customerId, $website);
@@ -373,7 +289,7 @@ Update a customer website.
 
 ```php
 // ...
-$website->setValue('https://www.helpscout.net');
+$website->setValue('https://www.example.net');
 
 $client->customerEntry()->updateWebsite($customerId, $website);
 ```
@@ -399,8 +315,8 @@ foreach ($customer->getProperties() as $property) {
 
 Update a customer's properties.
 ```php
-use HelpScout\Api\Entity\Collection;
-use HelpScout\Api\Entity\Patch;
+use FreeScout\Api\Entity\Collection;
+use FreeScout\Api\Entity\Patch;
 
 $operations = new Collection(
     [
@@ -430,7 +346,7 @@ Each of these sub-entities can be pre-loaded when fetching a mailbox to remove t
 to describe which sub-entities should be pre-loaded. For example:
 
 ```php
-use HelpScout\Api\Mailboxes\MailboxRequest;
+use FreeScout\Api\Mailboxes\MailboxRequest;
 
 $request = (new MailboxRequest)
     ->withFields()
@@ -451,7 +367,7 @@ $mailboxes = $client->mailboxes()->list();
 Get mailboxes with pre-loaded sub-entities.
 
 ```php
-use HelpScout\Api\Mailboxes\MailboxRequest;
+use FreeScout\Api\Mailboxes\MailboxRequest;
 
 $request = (new MailboxRequest)
     ->withFields()
@@ -471,7 +387,7 @@ $conversation = $client->conversations()->get($conversationId);
 You can easily eager load additional information/relationships for a conversation.  For example:
 
 ```php
-use HelpScout\Api\Conversations\ConversationRequest;
+use FreeScout\Api\Conversations\ConversationRequest;
 
 $request = (new ConversationRequest)
     ->withMailbox()
@@ -497,7 +413,7 @@ $conversations = $client->conversations()->list();
 Get conversations with pre-loaded sub-entities.
 
 ```php
-use HelpScout\Api\Conversations\ConversationRequest;
+use FreeScout\Api\Conversations\ConversationRequest;
 
 $request = (new ConversationRequest)
     ->withMailbox()
@@ -514,7 +430,7 @@ $conversations = $client->conversations()->list(null, $request);
 Narrow down the list of Conversations based on a set of filters.
 
 ```php
-use HelpScout\Api\Conversations\ConversationFilters;
+use FreeScout\Api\Conversations\ConversationFilters;
 
 $filters = (new ConversationFilters())
     ->inMailbox(1)
@@ -536,8 +452,8 @@ $conversations = $client->conversations()->list($filters);
 You can even combine the filters with the pre-loaded sub-entities in one request
 
 ```php
-use HelpScout\Api\Conversations\ConversationRequest;
-use HelpScout\Api\Conversations\ConversationFilters;
+use FreeScout\Api\Conversations\ConversationRequest;
+use FreeScout\Api\Conversations\ConversationFilters;
 
 $request = (new ConversationRequest)
     ->withMailbox()
@@ -597,7 +513,7 @@ try {
 Here's some other example scenarios where you might create conversations:
 
 <details>
-  <summary>Phone conversation, initiated by a Help Scout user</summary>
+  <summary>Phone conversation, initiated by a FreeScout user</summary>
 
 ```
 $user = $client->users()->get(31231);
@@ -676,8 +592,8 @@ $client->conversations()->unassign($conversationId);
 Create new Chat threads for a conversation.
 
 ```php
-use HelpScout\Api\Customers\Customer;
-use HelpScout\Api\Conversations\Threads\ChatThread;
+use FreeScout\Api\Customers\Customer;
+use FreeScout\Api\Conversations\Threads\ChatThread;
 
 $thread = new ChatThread();
 $customer = new Customer();
@@ -694,8 +610,8 @@ $client->threads()->create($conversationId, $thread);
 Create new Customer threads for a conversation.
 
 ```php
-use HelpScout\Api\Customers\Customer;
-use HelpScout\Api\Conversations\Threads\CustomerThread;
+use FreeScout\Api\Customers\Customer;
+use FreeScout\Api\Conversations\Threads\CustomerThread;
 
 $thread = new CustomerThread();
 $customer = new Customer();
@@ -712,7 +628,7 @@ $client->threads()->create($conversationId, $thread);
 Create new Note threads for a conversation.
 
 ```php
-use HelpScout\Api\Conversations\Threads\NoteThread;
+use FreeScout\Api\Conversations\Threads\NoteThread;
 
 $thread->setText('We are still looking into this');
 
@@ -724,8 +640,8 @@ $client->threads()->create($conversationId, $thread);
 Create new Phone threads for a conversation.
 
 ```php
-use HelpScout\Api\Customers\Customer;
-use HelpScout\Api\Conversations\Threads\PhoneThread;
+use FreeScout\Api\Customers\Customer;
+use FreeScout\Api\Conversations\Threads\PhoneThread;
 
 $thread = new PhoneThread();
 $customer = new Customer();
@@ -742,8 +658,8 @@ $client->threads()->create($conversationId, $thread);
 Create new Reply threads for a conversation.
 
 ```php
-use HelpScout\Api\Customers\Customer;
-use HelpScout\Api\Conversations\Threads\ReplyThread;
+use FreeScout\Api\Customers\Customer;
+use FreeScout\Api\Conversations\Threads\ReplyThread;
 
 $thread = new ReplyThread();
 $customer = new Customer();
@@ -773,8 +689,8 @@ $attachment->getData(); // attached file's contents
 Create an attachment:
 
 ```php
-use HelpScout\Api\Conversations\Threads\Attachments\AttachmentFactory;
-use HelpScout\Api\Support\Filesystem;
+use FreeScout\Api\Conversations\Threads\Attachments\AttachmentFactory;
+use FreeScout\Api\Support\Filesystem;
 
 $attachmentFactory = new AttachmentFactory(new Filesystem());
 $attachment = $attachmentFactory->make('path/to/profile.jpg');
@@ -845,47 +761,13 @@ $users = $client->users()->list();
 Narrow down the list of Users based on a set of filters.
 
 ```php
-use HelpScout\Api\Users\UserFilters;
+use FreeScout\Api\Users\UserFilters;
 
 $filters = (new UserFilters())
     ->inMailbox(1)
     ->byEmail('tester@test.com');
 
 $users = $client->users()->list($filters);
-```
-
-## Reports
-
-When running reports using the SDK, refer to the [developer docs](https://developer.helpscout.com/mailbox-api/) for the exact endpoint, parameters, and response formats. While most of the endpoints in this SDK are little more than pass-through methods to call the API, there are a few conveniences.
-
-First, for the `start`, `end`, `previousStart`, and `previousEnd` parameters, you may pass a formatted date-time string or any object implementing the `\DateTimeInterface` as the parameter. The client will automatically convert these objects to the proper format.
-
-For those parameters that accept multiple values (`mailboxes`, `tags`, `types,` and `folders`), you may pass an array of values and let the client convert them to the proper format. You may also pass a single value (or a comma-separated list of values) if you like.
-
-To run the report, use the `runReport` method available on the `ApiClient` instance. Pass the class path of the [report class](https://github.com/helpscout/helpscout-api-php/tree/master/src/Reports) you'd like to use as the first argument and the array of report parameters as the second argument. Be sure the keys in the parameter array match the URL params specified in the docs. The client will convert the JSON response returned by the API into an array.
-
-```php
-// Example of running the Company Overall Report
-// https://developer.helpscout.com/mailbox-api/endpoints/reports/company/reports-company-overall/
-
-use HelpScout\Api\Reports\Company;
-
-$params = [
-    // Date interval fields can be passed as an object implementing the \DateTimeInterface
-    // or as a string in the 'Y-m-d\Th:m:s\Z' format. All times should be in UTC.
-    'start' => new \DateTime('-7 days'),
-    'end' => new \DateTimeImmutable(),
-    'previousStart' => '2015-01-01T00:00:00Z',
-    'previousEnd' => '2015-01-31T23:59:59Z',
-
-    // Fields accepting multiple values can be passed as an array or a comma-separated string
-    'mailboxes' => [123, 321],
-    'tags' => '987,789',
-    'types' => ['chat', 'email'],
-    'folders' => [111, 222]
-];
-
-$report = $client->runReport(Company\Overall::class, $params);
 ```
 
 ## Webhooks
@@ -907,7 +789,7 @@ Create a webhook.
 The default state for a newly-created webhook is `enabled`.
 
 ```php
-use HelpScout\Api\Webhooks\Webhook;
+use FreeScout\Api\Webhooks\Webhook;
 
 $data = [
     'url' => 'http://bad-url.com',
@@ -952,7 +834,7 @@ $secret = 'superSekretKey';
 $incoming = new IncomingWebhook($request, $secret);
 ```
 
-Once you have the incoming webhook object, you can check the type of payload (customer, conversation, or test) as well as retrieve the data ([see example](https://github.com/helpscout/helpscout-api-php/blob/master/examples/incoming_webhook.php)). If a customer or conversation, you can retrieve the model associated. Otherwise, you can get the payload as either an associative array or standard class object.
+Once you have the incoming webhook object, you can check the type of payload (customer, conversation, or test) as well as retrieve the data. If a customer or conversation, you can retrieve the model associated. Otherwise, you can get the payload as either an associative array or standard class object.
 
 ## Workflows
 
@@ -977,9 +859,9 @@ $client->workflows()->updateStatus($id, 'active');
 
 # Error handling
 
-Any exception thrown by the client directly will implement `HelpScout\Api\Exception` and HTTP errors will result in `Http\Client\Exception\RequestException` being thrown.
+Any exception thrown by the client directly will implement `FreeScout\Api\Exception` and HTTP errors will result in `Http\Client\Exception\RequestException` being thrown.
 
-If an OAuth2 token is not provided or invalid then a `HelpScout\Api\Exception\AuthenticationException` is thrown.
+If an OAuth2 token is not provided or invalid then a `FreeScout\Api\Exception\AuthenticationException` is thrown.
 
 ## Validation
 
@@ -988,11 +870,11 @@ You'll encounter a `ValidationErrorException` if there are any validation errors
 ```php
 try {
     // do something
-} catch (\HelpScout\Api\Exception\ValidationErrorException $e) {
+} catch (\FreeScout\Api\Exception\ValidationErrorException $e) {
     $error = $e->getError();
 
     var_dump(
-        // A reference id for that request.  Including this anytime you contact Help Scout will
+        // A reference id for that request.  Including this anytime you contact Free Scout will
         // empower us to dig right to the heart of the issue
         $error->getCorrelationId(),
 
@@ -1006,7 +888,7 @@ try {
 
 # Pagination
 
-When fetching a collection of entities the client will return an instance of `HelpScout\Api\Entity\Collection`. If the end point supports pagination then it will return an instance of `HelpScout\Api\Entity\PagedCollection`.
+When fetching a collection of entities the client will return an instance of `FreeScout\Api\Entity\Collection`. If the end point supports pagination then it will return an instance of `FreeScout\Api\Entity\PagedCollection`.
 
 ```php
 /** @var PagedCollection $users */
@@ -1066,7 +948,3 @@ public function testMockReturnsProperMock()
 ```
 
 Once you've mocked an endpoint, you may want to clear it later on. To do this, you can use the `clearMock($endpoint)` method on the `ApiClient`.
-
-# Getting Support
-
-Please open an issue for any [SDK related problems or feature requests](https://github.com/helpscout/helpscout-api-php/issues).  For any issues that may involve sensitive customer or account data, please reach out to us via email at [help@helpscout.com](mailto:help@helpscout.com).

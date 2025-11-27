@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Mailboxes\Entry;
+namespace FreeScout\Api\Mailboxes\Entry;
 
 use DateTime;
-use HelpScout\Api\Assert\Assert;
-use HelpScout\Api\Entity\Hydratable;
+use FreeScout\Api\Assert\Assert;
+use FreeScout\Api\Entity\Hydratable;
 
 class Folder implements Hydratable
 {

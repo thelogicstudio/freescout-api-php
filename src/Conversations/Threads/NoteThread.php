@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations\Threads;
+namespace FreeScout\Api\Conversations\Threads;
 
-use HelpScout\Api\Conversations\Threads\Support\HasUser;
+use FreeScout\Api\Conversations\Threads\Support\HasUser;
 
 class NoteThread extends Thread
 {
@@ -14,7 +14,7 @@ class NoteThread extends Thread
 
     public static function resourceUrl(int $conversationId): string
     {
-        return sprintf('/v2/conversations/%d/notes', $conversationId);
+        return sprintf('/api/conversations/%d/threads', $conversationId);
     }
 
     public function getType(): ?string

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations;
+namespace FreeScout\Api\Conversations;
 
-use HelpScout\Api\Assert\Assert;
+use FreeScout\Api\Assert\Assert;
 
 class ConversationRequest
 {
@@ -36,6 +36,8 @@ class ConversationRequest
             ConversationLinks::THREADS,
             ConversationLinks::ASSIGNEE,
             ConversationLinks::WEB,
+			ConversationLinks::TIMELOGS,
+			ConversationLinks::TAGS,
         ]);
 
         $this->links[] = $link;
@@ -73,10 +75,15 @@ class ConversationRequest
         return $this->with(ConversationLinks::CLOSED_BY);
     }
 
-    public function withThreads(): self
-    {
-        return $this->with(ConversationLinks::THREADS);
-    }
+	public function withThreads(): self
+	{
+		return $this->with(ConversationLinks::THREADS);
+	}
+
+	public function withoutThreads(): self
+	{
+		return $this->with(ConversationLinks::THREADS);
+	}
 
     public function withAssignee(): self
     {
@@ -86,6 +93,16 @@ class ConversationRequest
     public function withWeb(): self
     {
         return $this->with(ConversationLinks::WEB);
+    }
+
+    public function withTimeLogs(): self
+    {
+        return $this->with(ConversationLinks::TIMELOGS);
+    }
+
+    public function withTags(): self
+    {
+        return $this->with(ConversationLinks::TAGS);
     }
 
     private function with(string $link): self

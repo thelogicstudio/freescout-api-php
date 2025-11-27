@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Exception;
+namespace FreeScout\Api\Exception;
 
 use GuzzleHttp\Exception\RequestException;
 

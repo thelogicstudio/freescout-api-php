@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations\Threads;
+namespace FreeScout\Api\Conversations\Threads;
 
-use HelpScout\Api\Endpoint;
-use HelpScout\Api\Entity\PagedCollection;
-use HelpScout\Api\Entity\Patch;
-use HelpScout\Api\Http\Hal\HalPagedResources;
-use HelpScout\Api\Http\Hal\HalResource;
+use FreeScout\Api\Endpoint;
+use FreeScout\Api\Entity\PagedCollection;
+use FreeScout\Api\Entity\Patch;
+use FreeScout\Api\Http\Hal\HalPagedResources;
+use FreeScout\Api\Http\Hal\HalResource;
 
 class ThreadsEndpoint extends Endpoint
 {
@@ -62,17 +62,17 @@ class ThreadsEndpoint extends Endpoint
 
     private static function threadSourceUrl(int $conversationId, int $threadId): string
     {
-        return sprintf('/v2/conversations/%d/threads/%d/original-source', $conversationId, $threadId);
+        return sprintf('/api/conversations/%d/threads/%d/original-source', $conversationId, $threadId);
     }
 
     private static function threadUrl(int $conversationId, int $threadId): string
     {
-        return sprintf('/v2/conversations/%d/threads/%d', $conversationId, $threadId);
+        return sprintf('/api/conversations/%d/threads/%d', $conversationId, $threadId);
     }
 
     private static function threadsUrl(int $conversationId): string
     {
-        return sprintf('/v2/conversations/%d/threads', $conversationId);
+        return sprintf('/api/conversations/%d/threads', $conversationId);
     }
 
     /**
@@ -96,7 +96,8 @@ class ThreadsEndpoint extends Endpoint
             $threadResources->getLinks(),
             function (string $uri) {
                 return $this->loadThreads($uri);
-            }
+            },
+			$uri
         );
     }
 }

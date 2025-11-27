@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations\Threads\Support;
+namespace FreeScout\Api\Conversations\Threads\Support;
 
 trait HasPartiesToBeNotified
 {

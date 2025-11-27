@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Mailboxes;
+namespace FreeScout\Api\Mailboxes;
 
 class MailboxLinks
 {

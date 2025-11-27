@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations\Threads\Attachments;
+namespace FreeScout\Api\Conversations\Threads\Attachments;
 
-use HelpScout\Api\Assert\Assert;
-use HelpScout\Api\Entity\Extractable;
-use HelpScout\Api\Entity\Hydratable;
-use HelpScout\Api\Http\Hal\HalDeserializer;
-use HelpScout\Api\Http\Hal\HalLinks;
+use FreeScout\Api\Assert\Assert;
+use FreeScout\Api\Entity\Extractable;
+use FreeScout\Api\Entity\Hydratable;
+use FreeScout\Api\Http\Hal\HalDeserializer;
+use FreeScout\Api\Http\Hal\HalLinks;
 
 class Attachment implements Extractable, Hydratable
 {
@@ -98,6 +98,10 @@ class Attachment implements Extractable, Hydratable
 
         if (isset($data['size']) && is_numeric($data['size'])) {
             $this->setSize((int) $data['size']);
+        }
+
+        if (isset($data['fileUrl'])) {
+            $this->setWebUrl($data['fileUrl']);
         }
 
         // The web accessible link for this file is pulled in via links
@@ -208,8 +212,6 @@ class Attachment implements Extractable, Hydratable
 
     /**
      * Get a web accessible URL for this attachment.
-     *
-     * @example https://secure.helpscout.net/file/[attachmentId]/[file-hash]/[filename].[extension]
      */
     public function getWebUrl(): ?string
     {

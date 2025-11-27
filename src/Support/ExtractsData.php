@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Support;
+namespace FreeScout\Api\Support;
 
 use DateTime;
-use HelpScout\Api\Exception\InvalidArgumentException;
+use FreeScout\Api\Exception\InvalidArgumentException;
 
 trait ExtractsData
 {
     /**
      * Convert DateTime to a particular version of the 8601 spec in UTC.
      *
-     * @see https://developer.helpscout.com/mailbox-api/overview/time/
      */
     private function to8601Utc(\DateTimeInterface $dateTime): string
     {

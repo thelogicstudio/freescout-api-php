@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations\Threads;
+namespace FreeScout\Api\Conversations\Threads;
 
-use HelpScout\Api\Entity\Extractable;
-use HelpScout\Api\Entity\Hydratable;
+use FreeScout\Api\Entity\Extractable;
+use FreeScout\Api\Entity\Hydratable;
 
 class Source implements Extractable, Hydratable
 {

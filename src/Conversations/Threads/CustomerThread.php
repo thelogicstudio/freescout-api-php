@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations\Threads;
+namespace FreeScout\Api\Conversations\Threads;
 
-use HelpScout\Api\Conversations\Threads\Support\HasPartiesToBeNotified;
-use HelpScout\Api\Support\HasCustomer;
+use FreeScout\Api\Conversations\Threads\Support\HasPartiesToBeNotified;
+use FreeScout\Api\Support\HasCustomer;
 
 class CustomerThread extends Thread
 {
@@ -16,7 +16,7 @@ class CustomerThread extends Thread
 
     public static function resourceUrl(int $conversationId): string
     {
-        return sprintf('/v2/conversations/%d/customer', $conversationId);
+        return sprintf('/api/conversations/%d/threads', $conversationId);
     }
 
     public function getType(): ?string

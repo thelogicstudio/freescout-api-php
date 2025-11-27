@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Users;
+namespace FreeScout\Api\Users;
 
-use HelpScout\Api\Assert\Assert;
+use FreeScout\Api\Assert\Assert;
 
 class UserFilters
 {

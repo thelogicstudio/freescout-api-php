@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations\Threads;
+namespace FreeScout\Api\Conversations\Threads;
 
 class ThreadFactory
 {
     public static $classMap = [
-        ChatThread::TYPE => ChatThread::class,
         CustomerThread::TYPE => CustomerThread::class,
-        PhoneThread::TYPE => PhoneThread::class,
         ReplyThread::TYPE => ReplyThread::class,
         NoteThread::TYPE => NoteThread::class,
         '_default' => Thread::class,

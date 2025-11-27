@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Support;
+namespace FreeScout\Api\Support;
 
 /**
  * Wrapping basic filesystem methods in an object for easy mocking.

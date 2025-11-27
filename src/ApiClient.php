@@ -2,24 +2,22 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api;
+namespace FreeScout\Api;
 
-use HelpScout\Api\Chats\ChatsEndpoint;
-use HelpScout\Api\Conversations\ConversationsEndpoint;
-use HelpScout\Api\Conversations\Threads\Attachments\AttachmentsEndpoint;
-use HelpScout\Api\Conversations\Threads\ThreadsEndpoint;
-use HelpScout\Api\Customers\CustomersEndpoint;
-use HelpScout\Api\Customers\Entry\CustomerEntryEndpoint;
-use HelpScout\Api\Http\Auth\CodeCredentials;
-use HelpScout\Api\Http\Authenticator;
-use HelpScout\Api\Http\RestClient;
-use HelpScout\Api\Mailboxes\MailboxesEndpoint;
-use HelpScout\Api\Reports\Report;
-use HelpScout\Api\Tags\TagsEndpoint;
-use HelpScout\Api\Teams\TeamsEndpoint;
-use HelpScout\Api\Users\UsersEndpoint;
-use HelpScout\Api\Webhooks\WebhooksEndpoint;
-use HelpScout\Api\Workflows\WorkflowsEndpoint;
+use FreeScout\Api\Chats\ChatsEndpoint;
+use FreeScout\Api\Conversations\ConversationsEndpoint;
+use FreeScout\Api\Conversations\Threads\Attachments\AttachmentsEndpoint;
+use FreeScout\Api\Conversations\Threads\ThreadsEndpoint;
+use FreeScout\Api\Customers\CustomersEndpoint;
+use FreeScout\Api\Customers\Entry\CustomerEntryEndpoint;
+use FreeScout\Api\Http\Authenticator;
+use FreeScout\Api\Http\RestClient;
+use FreeScout\Api\Mailboxes\MailboxesEndpoint;
+use FreeScout\Api\Tags\TagsEndpoint;
+use FreeScout\Api\Teams\TeamsEndpoint;
+use FreeScout\Api\Users\UsersEndpoint;
+use FreeScout\Api\Webhooks\WebhooksEndpoint;
+use FreeScout\Api\Workflows\WorkflowsEndpoint;
 use Mockery\LegacyMockInterface;
 
 class ApiClient
@@ -82,64 +80,12 @@ class ApiClient
         return $this->restClient->getAuthenticator();
     }
 
-    public function setAccessToken(string $accessToken): ApiClient
+    public function setApiKey(string $apiKey): ApiClient
     {
         $this->getAuthenticator()
-            ->setAccessToken($accessToken);
+            ->setApiKey($apiKey);
 
         return $this;
-    }
-
-    public function getTokens(): array
-    {
-        return $this->getAuthenticator()
-            ->getTokens();
-    }
-
-    public function useClientCredentials(string $appId, string $appSecret): ApiClient
-    {
-        $this->getAuthenticator()
-            ->useClientCredentials($appId, $appSecret);
-
-        return $this;
-    }
-
-    public function useRefreshToken(string $appId, string $appSecret, string $refreshToken): ApiClient
-    {
-        $this->getAuthenticator()
-            ->useRefreshToken($appId, $appSecret, $refreshToken);
-
-        return $this;
-    }
-
-    /**
-     * Takes an authorization code and exchanges it for an access/refresh token pair.
-     */
-    public function swapAuthorizationCodeForReusableTokens(
-        string $appId,
-        string $appSecret,
-        string $authorizationCode
-    ): ApiClient {
-        $authenticator = $this->getAuthenticator();
-
-        $authenticator->setAuth(new CodeCredentials($appId, $appSecret, $authorizationCode));
-        $authenticator->fetchAccessAndRefreshToken();
-
-        $this->useRefreshToken($appId, $appSecret, $authenticator->refreshToken());
-
-        return $this;
-    }
-
-    public function runReport(string $reportName, array $params = []): array
-    {
-        if (!\class_exists($reportName)) {
-            throw new \InvalidArgumentException("'{$reportName}' is not a valid report");
-        }
-
-        /** @var Report $report */
-        $report = $reportName::getInstance($params);
-
-        return $this->restClient->getReport($report);
     }
 
     /**

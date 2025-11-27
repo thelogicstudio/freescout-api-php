@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Workflows;
+namespace FreeScout\Api\Workflows;
 
-use HelpScout\Api\Assert\Assert;
-use HelpScout\Api\Entity\Extractable;
-use HelpScout\Api\Entity\Hydratable;
-use HelpScout\Api\Support\ExtractsData;
-use HelpScout\Api\Support\HydratesData;
+use FreeScout\Api\Assert\Assert;
+use FreeScout\Api\Entity\Extractable;
+use FreeScout\Api\Entity\Hydratable;
+use FreeScout\Api\Support\ExtractsData;
+use FreeScout\Api\Support\HydratesData;
 
 class Workflow implements Hydratable, Extractable
 {

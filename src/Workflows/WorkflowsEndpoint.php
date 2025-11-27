@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Workflows;
+namespace FreeScout\Api\Workflows;
 
-use HelpScout\Api\Assert\Assert;
-use HelpScout\Api\Endpoint;
-use HelpScout\Api\Entity\PagedCollection;
-use HelpScout\Api\Entity\Patch;
+use FreeScout\Api\Assert\Assert;
+use FreeScout\Api\Endpoint;
+use FreeScout\Api\Entity\PagedCollection;
+use FreeScout\Api\Entity\Patch;
 
 class WorkflowsEndpoint extends Endpoint
 {
-    public const RUN_WORKFLOW_URL = '/v2/workflows/%d/run';
-    public const LIST_WORKFLOWS_URI = '/v2/workflows';
-    public const PATCH_STATUS_URI = '/v2/workflows/%d';
+    public const RUN_WORKFLOW_URL = '/workflows/%d/run';
+    public const LIST_WORKFLOWS_URI = '/api/workflows';
+    public const PATCH_STATUS_URI = '/api/workflows/%d';
     public const RESOURCE_KEY = 'workflows';
     public const VALID_STATUS = [
         'active',

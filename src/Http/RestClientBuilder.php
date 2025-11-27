@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Http;
+namespace FreeScout\Api\Http;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
@@ -11,15 +11,11 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use HelpScout\Api\Http\Auth\Auth;
-use HelpScout\Api\Http\Auth\ClientCredentials;
-use HelpScout\Api\Http\Auth\HandlesTokenRefreshes;
-use HelpScout\Api\Http\Auth\NullCredentials;
-use HelpScout\Api\Http\Auth\RefreshCredentials;
-use HelpScout\Api\Http\Handlers\AuthenticationHandler;
-use HelpScout\Api\Http\Handlers\ClientErrorHandler;
-use HelpScout\Api\Http\Handlers\RateLimitHandler;
-use HelpScout\Api\Http\Handlers\ValidationHandler;
+use FreeScout\Api\Http\Auth\Auth;
+use FreeScout\Api\Http\Handlers\AuthenticationHandler;
+use FreeScout\Api\Http\Handlers\ClientErrorHandler;
+use FreeScout\Api\Http\Handlers\RateLimitHandler;
+use FreeScout\Api\Http\Handlers\ValidationHandler;
 
 class RestClientBuilder
 {
@@ -33,12 +29,10 @@ class RestClientBuilder
         $this->config = $config;
     }
 
-    /**
-     * @param \Closure|HandlesTokenRefreshes $tokenRefreshedCallback
-     */
-    public function build($tokenRefreshedCallback = null): RestClient
+
+    public function build(): RestClient
     {
-        $authenticator = $this->getAuthenticator($tokenRefreshedCallback);
+        $authenticator = $this->getAuthenticator();
 
         return new RestClient(
             $this->getGuzzleClient(),
@@ -56,48 +50,23 @@ class RestClientBuilder
         return new Client($options);
     }
 
-    protected function getAuthenticator($tokenRefreshedCallback = null): Authenticator
+    protected function getAuthenticator(): Authenticator
     {
-        $authConfig = $this->config['auth'] ?? [];
         $guzzleConfig = $this->config['guzzle'] ?? [];
 
         $authenticator = new Authenticator(
             new Client($guzzleConfig),
-            $this->getAuthClass($authConfig)
         );
-
-        if ($tokenRefreshedCallback !== null) {
-            $authenticator->callbackWhenTokenRefreshed($tokenRefreshedCallback);
-        }
+		$authenticator->setApiKey($this->config['apiKey'] ?? null);
 
         return $authenticator;
-    }
-
-    protected function getAuthClass(array $authConfig = []): Auth
-    {
-        $type = $authConfig['type'] ?? '';
-
-        switch ($type) {
-            case ClientCredentials::TYPE:
-                return new ClientCredentials(
-                    $authConfig['appId'],
-                    $authConfig['appSecret']
-                );
-            case RefreshCredentials::TYPE:
-                return new RefreshCredentials(
-                    $authConfig['appId'],
-                    $authConfig['appSecret'],
-                    $authConfig['refreshToken']
-                );
-            default:
-                return new NullCredentials();
-        }
     }
 
     protected function getOptions(): array
     {
         $guzzleConfig = $this->config['guzzle'] ?? [];
         return array_merge($guzzleConfig, [
+			'base_uri' => $this->config['baseUri'] ?? null,
             'handler' => $this->getHandlerStack(),
             'http_errors' => false,
         ]);

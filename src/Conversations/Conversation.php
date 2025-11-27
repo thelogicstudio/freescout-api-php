@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace HelpScout\Api\Conversations;
+namespace FreeScout\Api\Conversations;
 
 use DateTimeInterface;
-use HelpScout\Api\Assert\Assert;
-use HelpScout\Api\Conversations\Threads\IncludesThreadDetails;
-use HelpScout\Api\Conversations\Threads\Support\HasPartiesToBeNotified;
-use HelpScout\Api\Conversations\Threads\Thread;
-use HelpScout\Api\Conversations\Threads\ThreadFactory;
-use HelpScout\Api\Customers\Customer;
-use HelpScout\Api\Entity\Collection;
-use HelpScout\Api\Entity\Extractable;
-use HelpScout\Api\Entity\Hydratable;
-use HelpScout\Api\Mailboxes\Mailbox;
-use HelpScout\Api\Support\ExtractsData;
-use HelpScout\Api\Support\HasCustomer;
-use HelpScout\Api\Support\HydratesData;
-use HelpScout\Api\Tags\Tag;
-use HelpScout\Api\Users\User;
+use FreeScout\Api\Assert\Assert;
+use FreeScout\Api\Conversations\Threads\IncludesThreadDetails;
+use FreeScout\Api\Conversations\Threads\Support\HasPartiesToBeNotified;
+use FreeScout\Api\Conversations\Threads\Thread;
+use FreeScout\Api\Conversations\Threads\ThreadFactory;
+use FreeScout\Api\Customers\Customer;
+use FreeScout\Api\Entity\Collection;
+use FreeScout\Api\Entity\Extractable;
+use FreeScout\Api\Entity\Hydratable;
+use FreeScout\Api\Mailboxes\Mailbox;
+use FreeScout\Api\Support\ExtractsData;
+use FreeScout\Api\Support\HasCustomer;
+use FreeScout\Api\Support\HydratesData;
+use FreeScout\Api\Tags\Tag;
+use FreeScout\Api\Users\User;
 
 class Conversation implements Extractable, Hydratable
 {
@@ -240,9 +240,9 @@ class Conversation implements Extractable, Hydratable
             $this->hydrateSource($data['source']);
         }
 
-        if (isset($data['tags']) && is_array($data['tags'])) {
+        if (isset($embedded['tags']) && is_array($embedded['tags'])) {
             $this->tags = new Collection();
-            foreach ($data['tags'] as $tagData) {
+            foreach ($embedded['tags'] as $tagData) {
                 $tag = new Tag();
 
                 // Webhooks only return the tag name itself, not all the tag attributes
