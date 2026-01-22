@@ -182,6 +182,10 @@ class Customer implements Extractable, Hydratable
             $this->setEmails($emails);
         }
 
+		if (!empty($data['email'])) {
+			$this->addEmail($data['email']);
+		}
+
         if (isset($embedded['social_profiles']) && is_array($embedded['social_profiles'])) {
             $socialProfiles = $this->hydrateMany(SocialProfile::class, $embedded['social_profiles']);
 
