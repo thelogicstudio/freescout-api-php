@@ -160,8 +160,9 @@ class ConversationsEndpoint extends Endpoint
      */
     public function move(int $conversationId, int $toMailboxId): void
     {
-        $patch = Patch::move('mailboxId', $toMailboxId);
-        $this->patchConversation($conversationId, $patch);
+        $this->patchConversation($conversationId, [
+			'mailboxId' => $toMailboxId,
+		]);
     }
 
     /**
@@ -171,8 +172,9 @@ class ConversationsEndpoint extends Endpoint
      */
     public function updateSubject(int $conversationId, string $subject): void
     {
-        $patch = Patch::replace('subject', $subject);
-        $this->patchConversation($conversationId, $patch);
+        $this->patchConversation($conversationId, [
+			'subject' => $subject,
+		]);
     }
 
     /**
@@ -182,14 +184,14 @@ class ConversationsEndpoint extends Endpoint
      */
     public function updateCustomer(int $conversationId, int $newCustomerId): void
     {
-        $patch = Patch::replace('primaryCustomer.id', $newCustomerId);
-        $this->patchConversation($conversationId, $patch);
+        $this->patchConversation($conversationId, [
+			'customerId' => $newCustomerId
+		]);
     }
 
     public function publishDraft(int $conversationId): void
     {
-        $patch = Patch::replace('draft', false);
-        $this->patchConversation($conversationId, $patch);
+        $this->updateStatus($conversationId, 'active');
     }
 
     /**
@@ -197,24 +199,28 @@ class ConversationsEndpoint extends Endpoint
      */
     public function updateStatus(int $conversationId, string $status): void
     {
-        $patch = Patch::replace('status', $status);
-        $this->patchConversation($conversationId, $patch);
+        $this->patchConversation($conversationId, [
+			'status' => $status,
+		]);
     }
 
     public function assign(int $conversationId, int $assigneeId): void
     {
-        $patch = Patch::replace('assignTo', $assigneeId);
-        $this->patchConversation($conversationId, $patch);
+        $this->patchConversation($conversationId, [
+			'assignTo' => $assigneeId,
+		]);
     }
 
     public function unassign(int $conversationId): void
     {
-        $patch = Patch::remove('assignTo');
-        $this->patchConversation($conversationId, $patch);
+        $this->patchConversation($conversationId, [
+			'assignTo' => null
+		]);
     }
 
-    private function patchConversation(int $conversationId, Patch $patch): void
+    private function patchConversation(int $conversationId, $patch): void
     {
-        $this->restClient->patchResource($patch, sprintf('/api/conversations/%d', $conversationId));
+		if(!isset($patch['byUser'])) $patch['byUser'] = '1';
+        $this->restClient->updateResource($patch, sprintf('/api/conversations/%d', $conversationId));
     }
 }

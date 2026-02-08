@@ -74,7 +74,7 @@ class RestClient
             : null;
     }
 
-    public function updateResource(Extractable $entity, string $uri): void
+    public function updateResource(Extractable|array $entity, string $uri): void
     {
         $request = new Request(
             'PUT',
@@ -85,7 +85,7 @@ class RestClient
         $this->send($request);
     }
 
-    public function patchResource(Extractable $entity, string $uri): void
+    public function patchResource(Extractable|array $entity, string $uri): void
     {
         $request = new Request(
             'PATCH',
@@ -145,9 +145,9 @@ class RestClient
     /**
      * @throws \JsonException
      */
-    private function encodeEntity(Extractable $entity): string
+    private function encodeEntity(Extractable|array $entity): string
     {
-        return json_encode($entity->extract(), JSON_THROW_ON_ERROR);
+        return json_encode(is_array($entity) ?  $entity : $entity->extract(), JSON_THROW_ON_ERROR);
     }
 
     /**
